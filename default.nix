@@ -34,8 +34,8 @@
   dontFixup = true;
 
   postInstall = ''
-    mv $out/windows_amd64/* $out/
-    rm $out/windows_amd64
+    mv $out/bin/windows_amd64/* $out/bin
+    rmdir $out/bin/windows_amd64
   '';
 
   meta = {
