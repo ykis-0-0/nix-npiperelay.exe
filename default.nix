@@ -16,6 +16,20 @@
     export GOOS=windows
   '';
 
+  ldflags = let
+    inject = var: val: [
+      "-X" "main.${var}=${toString val}"
+    ];
+  in [
+    "-s" # Omit the symbol table and debug information
+    "-w" # Omit the DWARF symbol table
+  ]
+  ++ inject "version" "1.4.0-albertony"
+  ++ inject "commit" npiperelay.shortRev
+  ++ inject "date" (builtins.substring 0 8 npiperelay.lastModifiedDate)
+  ++ inject "builtBy" "nix-build"
+  ;
+
   # fixupPhase in Nix will mess up the binary it seems :(
   dontFixup = true;
 
