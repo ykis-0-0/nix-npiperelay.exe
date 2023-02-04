@@ -33,6 +33,11 @@
   # fixupPhase in Nix will mess up the binary it seems :(
   dontFixup = true;
 
+  postInstall = ''
+    mv $out/windows_amd64/* $out/
+    rm $out/windows_amd64
+  '';
+
   meta = {
     description = "Allows access to Windows named pipes from WSL";
     homepage = "https://github.com/albertony/npiperelay";
